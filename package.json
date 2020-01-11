@@ -1,0 +1,23 @@
+{
+  "name": "sprint-name-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beausimpson/sprint-name-generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beausimpson/sprint-name-generator/issues"
+  },
+  "homepage": "https://github.com/beausimpson/sprint-name-generator#readme",
+  "devDependencies": {
+    "electron": "^7.1.8"
+  }
+}
