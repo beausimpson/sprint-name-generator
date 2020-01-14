@@ -19,5 +19,8 @@
   "homepage": "https://github.com/beausimpson/sprint-name-generator#readme",
   "devDependencies": {
     "electron": "^7.1.8"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.1"
   }
 }
