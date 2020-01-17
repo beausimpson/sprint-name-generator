@@ -3,8 +3,8 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     require("dotenv").config();
-    let $ = require("jquery")
-    // window.Bootstrap = require('bootstrap')
+    require('bootstrap');
+    let $ = require("jquery");
 
     var converter = require('number-to-words');
     var Spotify = require('node-spotify-api');
@@ -15,32 +15,63 @@ window.addEventListener('DOMContentLoaded', () => {
     // accesses the spotify keys
     var spotify = new Spotify(keys.spotify);
 
-
-
-
-
     $("#name_generator_button").on("click", function (event) {
 
         event.preventDefault();
-
-        var sprintNumber = $("#sprint_number").val().trim();
+        
+        $("#generated_sprint_names").html("");
+        
         var searchTerm = $("#search_term").val().trim();
+        var sprintNumber= $("#sprint_number").val().trim();
 
-        const omdb = process.env.OMDB_APIKEY;
-        const queryURL = `http://www.omdbapi.com/?t=${searchTerm}&y=&plot=short&apikey=${omdb}`;
+        // if (sprintNumberValue = "") {
+        //     sprintNumber = ""
+        // } else {
+        //     sprintNumber = converter.toWordsOrdinal(sprintNumberValue)
+        // }
 
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
+        // const omdb = process.env.OMDB_APIKEY;
+        // const queryURL = `http://www.omdbapi.com/?t=${searchTerm}&y=&plot=short&apikey=${omdb}`;
 
-            console.log(response)
+        // $.ajax({
+        //     url: queryURL,
+        //     method: "GET"
+        // }).then(function (response) {
 
-            $("#generated_sprint_names").html(`<h5>${converter.toWordsOrdinal(sprintNumber)} ${response.Title}</h5>`);
+        //     console.log(response)
 
-            $("#sprint_number").val("");
-            $("#search_term").val("");
+        //     $("#generated_sprint_names").html(`<h5>${converter.toWordsOrdinal(sprintNumber)} ${response.Title}</h5>`);
 
+        //     $("#sprint_number").val("");
+        //     $("#search_term").val("");
+
+        // });
+
+        const song = searchTerm
+
+        spotify.search({ type: 'track', query: `${song}`, limit: '10' }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+
+            var i;
+            for (i=0; i < data.tracks.items.length; i++) {
+
+                if (data.tracks.items[i].name.split("(")[0].endsWith("s")) {
+                   let replacedString = data.tracks.items[i].name.split("(")[0].replace(/.$/,"zzz")
+
+                   $("#generated_sprint_names").append(`<h3>${converter.toWordsOrdinal(sprintNumber)} ${replacedString}</h3>`);
+
+                } else {
+                    $("#generated_sprint_names").append(`<h3>${converter.toWordsOrdinal(sprintNumber)} ${data.tracks.items[i].name.split("(")[0]}</h3>`);
+                }
+
+                
+                $("#sprint_number").val("");
+                $("#search_term").val("");
+
+            };
+            
         });
 
 
@@ -48,46 +79,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 });
-
-
-
-
-
-// function spotifySong(nodeArgs) {
-//     // fixes Node Argument issue if song has more than 1 word in name
-//     // var nodeArgs = process.argv;
-//     var songName = "";
-//     for (var i = 3; i < nodeArgs.length; i++) {
-
-//         if (i > 3 && i < nodeArgs.length) {
-//             songName = songName + "+" + nodeArgs[i];
-//         }
-//         else {
-//             songName += nodeArgs[i];
-//         }
-//     }
-
-//     // sets default song parameter if user does not enter song
-//     // -- does not add "The Sign" by Ace of Base as listed in instructions
-//     if (songName === "") {
-//         song = "The Sign"
-//     } else {
-//         song = songName
-//     }
-
-//     spotify.search({ type: 'track', query: `${song}`, limit: '5' }, function (err, data) {
-//         if (err) {
-//             return console.log('Error occurred: ' + err);
-//         }
-
-//         var song = {
-//             "Artist": `${data.tracks.items[0].album.artists[0].name}`,
-//             "Song Name": `${data.tracks.items[0].name}`,
-//             "Album": `${data.tracks.items[0].album.name}`,
-//             "Preview URL": `${data.tracks.items[0].preview_url}`,
-//         };
-
-//         console.log(JSON.stringify(song, null, 3));
-//         logData(song);
-//     });
-// };
