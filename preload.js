@@ -3,8 +3,9 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     require("dotenv").config();
-    require('bootstrap');
     let $ = require("jquery");
+    require('popper.js');
+    require('bootstrap');
 
     var converter = require('number-to-words');
     var Spotify = require('node-spotify-api');
@@ -22,12 +23,15 @@ window.addEventListener('DOMContentLoaded', () => {
         $("#generated_sprint_names").html("");
         
         var searchTerm = $("#search_term").val().trim();
-        var sprintNumber= $("#sprint_number").val().trim();
-
+        var sprintNumber = $("#sprint_number").val().trim();
+            // console.log(typeof(sprintNumber));
+        
+        
         // if (sprintNumberValue = "") {
         //     sprintNumber = ""
         // } else {
-        //     sprintNumber = converter.toWordsOrdinal(sprintNumberValue)
+        //     console.log(typeof(sprintNumber));
+        //     sprintNumber = converter.toWordsOrdinal(sprintNumber)
         // }
 
         // const omdb = process.env.OMDB_APIKEY;
@@ -60,10 +64,10 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (data.tracks.items[i].name.split("(")[0].endsWith("s")) {
                    let replacedString = data.tracks.items[i].name.split("(")[0].replace(/.$/,"zzz")
 
-                   $("#generated_sprint_names").append(`<h3>${converter.toWordsOrdinal(sprintNumber)} ${replacedString}</h3>`);
+                   $("#generated_sprint_names").append(`<h4>${converter.toWordsOrdinal(sprintNumber)} ${replacedString}</h4>`);
 
                 } else {
-                    $("#generated_sprint_names").append(`<h3>${converter.toWordsOrdinal(sprintNumber)} ${data.tracks.items[i].name.split("(")[0]}</h3>`);
+                    $("#generated_sprint_names").append(`<h4>${converter.toWordsOrdinal(sprintNumber)} ${data.tracks.items[i].name.split("(")[0].trim()}</h4>`);
                 }
 
                 
@@ -74,8 +78,6 @@ window.addEventListener('DOMContentLoaded', () => {
             
         });
 
-
     });
-
 
 });

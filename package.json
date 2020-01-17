@@ -1,7 +1,7 @@
 {
   "name": "sprint-name-generator",
   "version": "1.0.0",
-  "description": "name generator for tech team teams",
+  "description": "Sprint name generator that searches song titles from the spotify api",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
