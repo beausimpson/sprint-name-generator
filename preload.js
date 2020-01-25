@@ -54,6 +54,11 @@ window.addEventListener('DOMContentLoaded', () => {
         const song = searchTerm
 
         spotify.search({ type: 'track', query: `${song}`, limit: '10' }, function (err, data) {
+
+            // testing random name generator selector
+            let randomWord = Math.floor(Math.random() * (data.tracks.items.length));
+            console.log(data.tracks.items[randomWord].name);
+
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
