@@ -3,6 +3,7 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     require("dotenv").config();
+    
     let $ = require("jquery");
     require('popper.js');
     require('bootstrap');
